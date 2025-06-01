@@ -25,6 +25,13 @@ export default function Family() {
             getImagePath={getImagePath}
             getImageAlt={getImageAlt}
             className="family-gallery"
+            useSwiper={true}
+            swiperEffect="coverflow"
+            swiperBreakpoints={{
+              320: { slidesPerView: 1, spaceBetween: 20 },
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 30 }
+            }}
           />
         </section>
 

@@ -25,8 +25,13 @@ export default function Letters() {
             getImagePath={getImagePath}
             getImageAlt={getImageAlt}
             className="letters-gallery"
-            slideWidth={400}
-            slideHeight={600}
+            useSwiper={true}
+            swiperEffect="coverflow"
+            swiperBreakpoints={{
+              320: { slidesPerView: 1, spaceBetween: 20 },
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 30 }
+            }}
             imageClassName="object-contain"
           />
         </section>
