@@ -15,12 +15,12 @@ const videos = [
 
 export default function YoutubeGallery() {
   return (
-    <section className="my-12">
+    <section className="my-12 px-4">
       <h2 className="text-3xl font-bold mb-8 text-center">סרטונים לזכר חיים</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
         {videos.map((video, idx) => (
-          <div key={idx} className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center">
-            <div className="w-full aspect-video mb-4">
+          <div key={idx} className="bg-white rounded-lg shadow-md p-2 md:p-4 flex flex-col items-center">
+            <div className="w-full aspect-video mb-2 md:mb-4">
               <iframe
                 width="100%"
                 height="100%"
@@ -32,7 +32,7 @@ export default function YoutubeGallery() {
                 className="rounded-lg w-full h-full"
               ></iframe>
             </div>
-            <p className="text-center text-gray-700 font-semibold">{video.title}</p>
+            <p className="text-center text-gray-700 font-semibold text-sm md:text-base px-2">{video.title}</p>
           </div>
         ))}
       </div>
