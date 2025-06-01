@@ -1,18 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
+import ImageGallery from '../components/ImageGallery';
 
 export default function Letters() {
   // Array of letter photo numbers based on actual files
   const letterPhotos = [
-    10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-    20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30
   ];
+
+  const getImagePath = (num) => `/images/letters/Scan_Pic00${num}.jpg`;
+  const getImageAlt = (num) => `מכתב או כתבה ${num}`;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 text-right">
@@ -22,54 +20,15 @@ export default function Letters() {
         {/* Letters and Articles Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-semibold mb-8 text-center text-gray-700 tracking-tight">מכתבים וכתבות לזכר חיים</h2>
-          <div className="relative px-12">
-            <Swiper
-              modules={[Navigation, Pagination, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              spaceBetween={30}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2,
-                slideShadows: true,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              navigation={true}
-              className="letters-swiper"
-            >
-              {letterPhotos.map((num, index) => (
-                <SwiperSlide key={num} className="w-[400px] h-[600px]">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl bg-white">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Image
-                        src={`/images/letters/Scan_Pic00${num}.jpg`}
-                        alt={`מכתב או כתבה ${num}`}
-                        width={400}
-                        height={600}
-                        className="object-contain w-full h-full"
-                        priority={index < 3}
-                        onError={(e) => {
-                          console.error(`Error loading image ${num}`);
-                          e.target.src = '/images/placeholder.jpg';
-                        }}
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <p className="text-sm font-medium">מכתב/כתבה {num}</p>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+          <ImageGallery
+            images={letterPhotos}
+            getImagePath={getImagePath}
+            getImageAlt={getImageAlt}
+            className="letters-gallery"
+            slideWidth={400}
+            slideHeight={600}
+            imageClassName="object-contain"
+          />
         </section>
 
         {/* Add custom styles */}

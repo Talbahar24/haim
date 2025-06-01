@@ -8,19 +8,41 @@ export default function Share() {
     relationship: '',
     memory: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically handle the form submission
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      relationship: '',
-      memory: '',
-    });
-    alert('תודה על השיתוף! הזיכרון שלך נשלח בהצלחה.');
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/api/send-memory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send memory');
+      }
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        relationship: '',
+        memory: '',
+      });
+      setSubmitStatus('success');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -40,6 +62,18 @@ export default function Share() {
           <p className="text-gray-600 mb-8 text-center">
             אנחנו מזמינים אתכם לשתף זיכרונות, סיפורים ותמונות של חיים. כל זיכרון חשוב ומשמעותי.
           </p>
+
+          {submitStatus === 'success' && (
+            <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-md text-center">
+              תודה על השיתוף! הזיכרון שלך נשלח בהצלחה.
+            </div>
+          )}
+
+          {submitStatus === 'error' && (
+            <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-md text-center">
+              אירעה שגיאה בשליחת הזיכרון. אנא נסה שוב מאוחר יותר.
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
@@ -126,9 +160,12 @@ export default function Share() {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-red-700 text-white px-8 py-3 rounded-md hover:bg-red-800 transition-colors"
+                disabled={isSubmitting}
+                className={`bg-red-700 text-white px-8 py-3 rounded-md transition-colors ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-800'
+                }`}
               >
-                שלח זיכרון
+                {isSubmitting ? 'שולח...' : 'שלח זיכרון'}
               </button>
             </div>
           </form>

@@ -3,12 +3,16 @@ import Image from 'next/image';
 import YoutubeGallery from '../components/YoutubeGallery';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
+import { useState, useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 
 export default function Home() {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   // Array of image names based on actual files
   const galleryImages = [
     // Scan_Pic series
@@ -30,6 +34,41 @@ export default function Home() {
       return `/images/${name}.jpg`;
     }
     return `/images/${name}.jpg`;
+  };
+
+  // Function to handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!selectedImage) return;
+
+      if (e.key === 'ArrowLeft') {
+        navigateImage('prev');
+      } else if (e.key === 'ArrowRight') {
+        navigateImage('next');
+      } else if (e.key === 'Escape') {
+        setSelectedImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, currentImageIndex]);
+
+  // Function to navigate between images
+  const navigateImage = (direction) => {
+    const newIndex = direction === 'next' 
+      ? (currentImageIndex + 1) % galleryImages.length 
+      : (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    
+    setCurrentImageIndex(newIndex);
+    setSelectedImage(galleryImages[newIndex]);
+  };
+
+  // Function to open image and set current index
+  const openImage = (imageName) => {
+    const index = galleryImages.indexOf(imageName);
+    setCurrentImageIndex(index);
+    setSelectedImage(imageName);
   };
 
   return (
@@ -56,180 +95,7 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-16 px-4">
-        {/* Memorial Quote */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-12 mb-16 text-center transform hover:scale-[1.02] transition-transform duration-300">
-          <blockquote className="text-3xl text-gray-700 italic font-light leading-relaxed">
-            "חיים היה נסיך, נסיך בין חבריו ובמשפחתו"
-          </blockquote>
-        </div>
-
-        {/* Photo Gallery Section */}
-        <section className="mb-20">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">גלריית תמונות</h2>
-          <div className="relative px-12">
-            <Swiper
-              modules={[Navigation, Pagination, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              spaceBetween={30}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2,
-                slideShadows: true,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              navigation={true}
-              className="home-swiper"
-            >
-              {galleryImages.map((imageName, index) => (
-                <SwiperSlide key={imageName} className="w-[300px] h-[400px]">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl bg-gray-100">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Image
-                        src={getImagePath(imageName)}
-                        alt={`תמונה של חיים בכר ז"ל`}
-                        width={300}
-                        height={400}
-                        className="object-cover w-full h-full"
-                        priority={index < 3}
-                        onError={(e) => {
-                          console.error(`Error loading image ${imageName}`);
-                          e.target.src = '/images/placeholder.jpg';
-                          e.target.onerror = null; // Prevent infinite loop
-                        }}
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <p className="text-sm font-medium">חיים בכר ז"ל</p>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
-          {/* Add custom styles */}
-          <style jsx global>{`
-            .home-swiper {
-              padding: 50px 0;
-              width: 100%;
-            }
-            .swiper-slide {
-              width: 300px !important;
-              height: 400px !important;
-              opacity: 0.4;
-              transform: scale(0.8);
-              transition: all 0.3s ease;
-            }
-            .swiper-slide-active {
-              opacity: 1;
-              transform: scale(1);
-            }
-            .swiper-button-next,
-            .swiper-button-prev {
-              color: #991b1b !important;
-              background: rgba(255, 255, 255, 0.8);
-              width: 40px !important;
-              height: 40px !important;
-              border-radius: 50%;
-              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            }
-            .swiper-button-next:after,
-            .swiper-button-prev:after {
-              font-size: 18px !important;
-            }
-            .swiper-pagination-bullet-active {
-              background: #991b1b !important;
-            }
-          `}</style>
-        </section>
-
-        {/* Timeline Section */}
-        <section className="mb-20">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">ציוני דרך בחייו</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-lg transform hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-6 text-red-700">ילדות ונעורים</h3>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                חיים נולד ב-29 ביוני 1981, בן בכור לצ'לה ומוריס ואח ליוסי. הוא למד בבית הספר היסודי "ש"י עגנון" בבת ים ובגיל עשר עברה משפחתו לשכונת רמת אביב.
-              </p>
-            </div>
-            <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-lg transform hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-6 text-red-700">תנועת הצופים</h3>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                כשהיה בכיתה ח' הצטרף חיים לשבט הצופים, לשכבת "עוצמה". קן הצופים הפך לביתו השני עד כי אמו אמרה לו שהוא נמצא יותר בצופים מאשר בבית.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Service Section */}
-        <section className="mb-20">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">שירות צבאי</h2>
-          <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg">
-            <p className="text-gray-600 leading-relaxed text-lg mb-6">
-              חיים עבר בהצלחה את המיונים לקורס טיס. לאחר שנה וחודשיים בקורס טייס, עבר חיים לשרת ביחידת פלס"ר צנחנים. הוא היה יכול לבחור בכל יחידה שרצה, אבל בחר בקרבי.
-            </p>
-            <p className="text-gray-600 leading-relaxed text-lg">
-              הצוות שאליו שובץ היה כבר מגובש לאחר חודשים של אימונים משותפים, אך חיים השתלב בו בקלות ובמהירות. חבריו לצוות מספרים שחיים הוביל את הצוות הן מבחינה מקצועית והן מבחינה חברתית.
-            </p>
-          </div>
-        </section>
-
-        {/* Team Memorial */}
-        <section className="mb-20">
-          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">דברים לזכרו</h2>
-          <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold text-red-700 mb-2">צוות נוב' 99 / דברים בערב יום הזיכרון</h3>
-              <p className="text-gray-600">5.4.02</p>
-            </div>
-            <div className="text-gray-700 leading-relaxed text-lg space-y-6">
-              <p className="italic">
-                חיים,<br />
-                עבר כבר יותר מחודש וחצי ואנחנו עדיין מתקשים להאמין ולעכל את חסרונך. עדיין מחפשים אותך בציותי הכוחות, במיטה יושן ערום, עדיין מחפשים את החיוך הקטן, את הצחוק המתגלגל והכי הרבה את הטון התקיף שאומר: "חבר'ה, יש עבודה לעשות".
-              </p>
-              <p>
-                כל הזמן אנו שומעים את צירוף המילים "נפל בעת מילוי תפקידו" ואני שואל את עצמי מה תפקידו של אדם בחיים?<br />
-                תפקידו של אדם בחיים הוא לעשות חיים, לאהוב, להתחתן ולגדל דור חדש של אנשים שימלאו את תפקידו של האדם בחיים.
-              </p>
-              <p>
-                תפקידו של אדם אינו להתנדב לכל משימה, אינו לחנם בני נוער, אינו לאהוב את כולם ללא גבולות, תפקידו של אדם אינו ללכת לקרבי, אינו לפקד על חיילים, אינו להצליח בכל דבר שהוא עושה, אינו להלחם ואינו ללכת בראש.<br />
-                תפקידו של אדם בחיים אינו למות בגיל 20.
-              </p>
-              <p>
-                חיים לא נפל בעת מילוי תפקידו, חיים נפל בעת מילוי הרבה יותר מתפקידו.<br />
-                חיים נפל בעת שהיווה דוגמא ומופת לכולנו, בעת שעשה את מה שאהב ואת מה שהאמין כי נכון, חיים נפל בעת שאהב את כולם ואהב את החיים, חיים נפל בעת שסמכנו עליו והלכנו אחריו בשדה הקרב.<br />
-                חיים נפל בגיל 20.
-              </p>
-              <p className="italic">
-                חיים, כבר הספקנו להיות בלעדייך שוב בבאלטה, ובבית לחם, ובבית שלך, ובזותך, ושוב בבית שלך, ובקסבה של שכם ושום דבר לא כמו שהיה, כי לא נוכל להמשיך הלאה, תמיד חלק מאיתנו ישאר באותה סמטה ובאותו לילה ארור בבאלטה.<br />
-                ותמיד נזכור שלא נפלת בעת מילוי תפקידך אלא בעת מילוי הרבה יותר מתפקידך.
-              </p>
-              <p className="italic">
-                חיים, תרשה לי לסיים בתפילה קטנה שאנו ומשפחתך לא נדע עוד צער ובעוד משהו קטן מדברי המשורר:<br />
-                "את הגשם תן רק בעתו,<br />
-                ובאביב הבא לנו פרחים,<br />
-                ותן לנו שנית להיות אתו.<br />
-                תן לנו שנית להיות אתו."
-              </p>
-              <p className="text-center font-semibold mt-8">
-                אוהבים תמיד - צוות נובמבר 99<br />
-                סיירת צנחנים
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Detailed Biography */}
+        {/* Detailed Biography - Moved to top */}
         <section className="mb-20">
           <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">חיים בכר ז"ל</h2>
           
@@ -263,7 +129,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-red-700 mb-2">הותיר אחריו</h3>
-                  <p className="text-gray-700" > הורים אח ואחות</p>
+                  <p className="text-gray-700">הורים אח ואחות</p>
                 </div>
               </div>
             </div>
@@ -337,6 +203,13 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Memorial Quote */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-12 mb-16 text-center transform hover:scale-[1.02] transition-transform duration-300">
+          <blockquote className="text-3xl text-gray-700 italic font-light leading-relaxed">
+            "חיים היה נסיך, נסיך בין חבריו ובמשפחתו"
+          </blockquote>
+        </div>
+
         {/* Memorial Projects */}
         <section className="mb-20">
           <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">פרויקטים להנצחה</h2>
@@ -362,8 +235,145 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Team Memorial */}
+        <section className="mb-20">
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">דברים לזכרו</h2>
+          <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-semibold text-red-700 mb-2">צוות נוב' 99 / דברים בערב יום הזיכרון</h3>
+              <p className="text-gray-600">5.4.02</p>
+            </div>
+            <div className="text-gray-700 leading-relaxed text-lg space-y-6">
+              <p className="italic">
+                חיים,<br />
+                עבר כבר יותר מחודש וחצי ואנחנו עדיין מתקשים להאמין ולעכל את חסרונך. עדיין מחפשים אותך בציותי הכוחות, במיטה יושן ערום, עדיין מחפשים את החיוך הקטן, את הצחוק המתגלגל והכי הרבה את הטון התקיף שאומר: "חבר'ה, יש עבודה לעשות".
+              </p>
+              <p>
+                כל הזמן אנו שומעים את צירוף המילים "נפל בעת מילוי תפקידו" ואני שואל את עצמי מה תפקידו של אדם בחיים?<br />
+                תפקידו של אדם בחיים הוא לעשות חיים, לאהוב, להתחתן ולגדל דור חדש של אנשים שימלאו את תפקידו של האדם בחיים.
+              </p>
+              <p>
+                תפקידו של אדם אינו להתנדב לכל משימה, אינו לחנם בני נוער, אינו לאהוב את כולם ללא גבולות, תפקידו של אדם אינו ללכת לקרבי, אינו לפקד על חיילים, אינו להצליח בכל דבר שהוא עושה, אינו להלחם ואינו ללכת בראש.<br />
+                תפקידו של אדם בחיים אינו למות בגיל 20.
+              </p>
+              <p>
+                חיים לא נפל בעת מילוי תפקידו, חיים נפל בעת מילוי הרבה יותר מתפקידו.<br />
+                חיים נפל בעת שהיווה דוגמא ומופת לכולנו, בעת שעשה את מה שאהב ואת מה שהאמין כי נכון, חיים נפל בעת שאהב את כולם ואהב את החיים, חיים נפל בעת שסמכנו עליו והלכנו אחריו בשדה הקרב.<br />
+                חיים נפל בגיל 20.
+              </p>
+              <p className="italic">
+                חיים, כבר הספקנו להיות בלעדייך שוב בבאלטה, ובבית לחם, ובבית שלך, ובזותך, ושוב בבית שלך, ובקסבה של שכם ושום דבר לא כמו שהיה, כי לא נוכל להמשיך הלאה, תמיד חלק מאיתנו ישאר באותה סמטה ובאותו לילה ארור בבאלטה.<br />
+                ותמיד נזכור שלא נפלת בעת מילוי תפקידך אלא בעת מילוי הרבה יותר מתפקידך.
+              </p>
+              <p className="italic">
+                חיים, תרשה לי לסיים בתפילה קטנה שאנו ומשפחתך לא נדע עוד צער ובעוד משהו קטן מדברי המשורר:<br />
+                "את הגשם תן רק בעתו,<br />
+                ובאביב הבא לנו פרחים,<br />
+                ותן לנו שנית להיות אתו.<br />
+                תן לנו שנית להיות אתו."
+              </p>
+              <p className="text-center font-semibold mt-8">
+                אוהבים תמיד - צוות נובמבר 99<br />
+                סיירת צנחנים
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Youtube Gallery */}
         <YoutubeGallery />
+
+        {/* Photo Gallery Section */}
+        <section className="mb-20">
+          <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">גלריית תמונות</h2>
+          <div className="relative px-12">
+            <Swiper
+              modules={[Navigation, Pagination, EffectCoverflow]}
+              effect="coverflow"
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView="auto"
+              spaceBetween={30}
+              coverflowEffect={{
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: true,
+              }}
+              pagination={{
+                clickable: true,
+              }}
+              navigation={true}
+              className="home-swiper"
+            >
+              {galleryImages.map((imageName, index) => (
+                <SwiperSlide key={imageName} className="w-[300px] h-[400px]">
+                  <div 
+                    className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl bg-gray-100 cursor-pointer"
+                    onClick={() => openImage(imageName)}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Image
+                        src={getImagePath(imageName)}
+                        alt={`תמונה של חיים בכר ז"ל`}
+                        width={300}
+                        height={400}
+                        className="object-cover w-full h-full"
+                        priority={index < 3}
+                        onError={(e) => {
+                          console.error(`Error loading image ${imageName}`);
+                          e.target.src = '/images/placeholder.jpg';
+                          e.target.onerror = null;
+                        }}
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                        <p className="text-sm font-medium">לחץ להגדלה</p>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          {/* Add custom styles */}
+          <style jsx global>{`
+            .home-swiper {
+              padding: 50px 0;
+              width: 100%;
+            }
+            .swiper-slide {
+              width: 300px !important;
+              height: 400px !important;
+              opacity: 0.4;
+              transform: scale(0.8);
+              transition: all 0.3s ease;
+            }
+            .swiper-slide-active {
+              opacity: 1;
+              transform: scale(1);
+            }
+            .swiper-button-next,
+            .swiper-button-prev {
+              color: #991b1b !important;
+              background: rgba(255, 255, 255, 0.8);
+              width: 40px !important;
+              height: 40px !important;
+              border-radius: 50%;
+              box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            }
+            .swiper-button-next:after,
+            .swiper-button-prev:after {
+              font-size: 18px !important;
+            }
+            .swiper-pagination-bullet-active {
+              background: #991b1b !important;
+            }
+          `}</style>
+        </section>
       </main>
 
       {/* Footer */}
@@ -410,6 +420,53 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Full Screen Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+        >
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            {/* Close button */}
+            <button 
+              className="absolute top-4 right-4 text-white text-4xl hover:text-red-500 transition-colors duration-300 z-10"
+              onClick={() => setSelectedImage(null)}
+            >
+              ×
+            </button>
+
+            {/* Navigation buttons */}
+            <button 
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-red-500 transition-colors duration-300 z-10 bg-black/30 p-4 rounded-full"
+              onClick={() => navigateImage('next')}
+            >
+              ›
+            </button>
+            <button 
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl hover:text-red-500 transition-colors duration-300 z-10 bg-black/30 p-4 rounded-full"
+              onClick={() => navigateImage('prev')}
+            >
+              ‹
+            </button>
+
+            {/* Image counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-lg bg-black/30 px-4 py-2 rounded-full">
+              {currentImageIndex + 1} / {galleryImages.length}
+            </div>
+
+            {/* Main image */}
+            <div className="relative w-full h-full max-w-7xl max-h-[90vh]">
+              <Image
+                src={getImagePath(selectedImage)}
+                alt={`תמונה של חיים בכר ז"ל`}
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 

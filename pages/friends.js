@@ -1,11 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
+import ImageGallery from '../components/ImageGallery';
 
 export default function Friends() {
   // Array of friend photo names based on actual files
@@ -19,6 +14,9 @@ export default function Friends() {
     'HP_050644_11'
   ];
 
+  const getImagePath = (name) => `/images/friends/${name}.jpg`;
+  const getImageAlt = (name) => `חיים עם חברים - ${name}`;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 text-right">
       <main className="max-w-7xl mx-auto py-16 px-4">
@@ -27,90 +25,13 @@ export default function Friends() {
         {/* Friends Photos Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-semibold mb-8 text-center text-gray-700 tracking-tight">תמונות עם חברים</h2>
-          <div className="relative px-12">
-            <Swiper
-              modules={[Navigation, Pagination, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              spaceBetween={30}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2,
-                slideShadows: true,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              navigation={true}
-              className="friends-swiper"
-            >
-              {friendPhotos.map((photoName, index) => (
-                <SwiperSlide key={photoName} className="w-[300px] h-[400px]">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl bg-gray-100">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Image
-                        src={`/images/friends/${photoName}.jpg`}
-                        alt={`חיים עם חברים`}
-                        width={300}
-                        height={400}
-                        className="object-cover w-full h-full"
-                        priority={index < 3}
-                        onError={(e) => {
-                          console.error(`Error loading image ${photoName}`);
-                          e.target.src = '/images/placeholder.jpg';
-                        }}
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <p className="text-sm font-medium">חיים עם חברים</p>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+          <ImageGallery
+            images={friendPhotos}
+            getImagePath={getImagePath}
+            getImageAlt={getImageAlt}
+            className="friends-gallery"
+          />
         </section>
-
-        {/* Add custom styles */}
-        <style jsx global>{`
-          .friends-swiper {
-            padding: 50px 0;
-            width: 100%;
-          }
-          .swiper-slide {
-            width: 300px !important;
-            height: 400px !important;
-            opacity: 0.4;
-            transform: scale(0.8);
-            transition: all 0.3s ease;
-          }
-          .swiper-slide-active {
-            opacity: 1;
-            transform: scale(1);
-          }
-          .swiper-button-next,
-          .swiper-button-prev {
-            color: #991b1b !important;
-            background: rgba(255, 255, 255, 0.8);
-            width: 40px !important;
-            height: 40px !important;
-            border-radius: 50%;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-          }
-          .swiper-button-next:after,
-          .swiper-button-prev:after {
-            font-size: 18px !important;
-          }
-          .swiper-pagination-bullet-active {
-            background: #991b1b !important;
-          }
-        `}</style>
 
         {/* Scouts Friends */}
         <section className="mb-16">

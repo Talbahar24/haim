@@ -1,11 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-coverflow';
+import ImageGallery from '../components/ImageGallery';
 
 export default function Family() {
   // Array of family photo numbers based on actual files
@@ -13,6 +8,9 @@ export default function Family() {
     10, 11, 13, 14, 15, 16, 17, 18, 19, 20,
     21, 22, 23, 24, 25, 26, 27, 28, 29
   ];
+
+  const getImagePath = (num) => `/images/family/HP_050589_${num}.jpg`;
+  const getImageAlt = (num) => `תמונה משפחתית ${num}`;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 text-right">
@@ -22,54 +20,12 @@ export default function Family() {
         {/* Family Photos Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-semibold mb-8 text-center text-gray-700 tracking-tight">תמונות משפחתיות</h2>
-          <div className="relative px-12">
-            <Swiper
-              modules={[Navigation, Pagination, EffectCoverflow]}
-              effect="coverflow"
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView="auto"
-              spaceBetween={30}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 0,
-                depth: 100,
-                modifier: 2,
-                slideShadows: true,
-              }}
-              pagination={{
-                clickable: true,
-              }}
-              navigation={true}
-              className="family-swiper"
-            >
-              {familyPhotos.map((num) => (
-                <SwiperSlide key={num} className="w-[300px] h-[400px]">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-xl bg-gray-100">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Image
-                        src={`/images/family/HP_050589_${num}.jpg`}
-                        alt={`תמונה משפחתית ${num}`}
-                        width={300}
-                        height={400}
-                        className="object-cover w-full h-full"
-                        priority={num <= 13}
-                        onError={(e) => {
-                          console.error(`Error loading image ${num}`);
-                          e.target.src = '/images/placeholder.jpg';
-                        }}
-                      />
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <p className="text-sm font-medium">תמונה משפחתית {num}</p>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
+          <ImageGallery
+            images={familyPhotos}
+            getImagePath={getImagePath}
+            getImageAlt={getImageAlt}
+            className="family-gallery"
+          />
         </section>
 
         {/* Add custom styles */}
