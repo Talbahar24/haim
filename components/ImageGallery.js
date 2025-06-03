@@ -15,7 +15,6 @@ export default function ImageGallery({
   slideWidth = 300,
   slideHeight = 400,
   imageClassName = 'object-cover',
-  useSwiper = false,
   swiperEffect = 'coverflow',
   swiperBreakpoints = {
     320: { slidesPerView: 1, spaceBetween: 20 },
@@ -24,19 +23,7 @@ export default function ImageGallery({
   }
 }) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const handleImageClick = (image) => {
     const index = images.indexOf(image);
@@ -70,26 +57,6 @@ export default function ImageGallery({
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
   }, [selectedImage, currentImageIndex]);
-
-  // Grid Gallery Component
-  const GridGallery = () => (
-    <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 ${className}`}>
-      {images.map((image, index) => (
-        <div
-          key={index}
-          className="relative aspect-square cursor-pointer overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-          onClick={() => handleImageClick(image)}
-        >
-          <Image
-            src={getImagePath(image)}
-            alt={getImageAlt(image)}
-            fill
-            className={`${imageClassName} transition-transform duration-300 hover:scale-110`}
-          />
-        </div>
-      ))}
-    </div>
-  );
 
   // Swiper Gallery Component
   const SwiperGallery = () => (
@@ -197,10 +164,7 @@ export default function ImageGallery({
 
   return (
     <div className="relative">
-      {/* Show Swiper on desktop if useSwiper is true, otherwise show Grid */}
-      {!isMobile && useSwiper ? <SwiperGallery /> : <GridGallery />}
-
-      {/* Modal for full-screen image view */}
+      <SwiperGallery />
       {selectedImage && <FullScreenModal />}
     </div>
   );
