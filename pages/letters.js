@@ -36,6 +36,24 @@ export default function Letters() {
           />
         </section>
 
+        {/* PDF Documents Section */}
+        <section className="mb-16 bg-white rounded-lg shadow-lg p-8">
+          <h2 className="text-3xl font-semibold mb-6 text-center text-gray-700 tracking-tight">מסמכים נוספים</h2>
+          <div className="text-center">
+            <a
+              href="/documents/חיים_כתבות.pdf.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 bg-red-800 text-white rounded-lg hover:bg-red-900 transition-colors duration-300 shadow-md"
+            >
+              <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              צפה בכתבות נוספות על חיים
+            </a>
+          </div>
+        </section>
+
         {/* Add custom styles */}
         <style jsx global>{`
           .letters-swiper {
