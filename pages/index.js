@@ -165,7 +165,16 @@ export default function Home() {
                     <p className="text-gray-700">בט"ז באדר תשס"ב, 28/2/2002</p>
                     <p className="text-gray-700">מקום נפילה: מחנה בלטה (שכם)</p>
                     <p className="text-gray-700">באזור יהודה ושומרון</p>
-                    <p className="text-gray-700">מקום קבורה: תל אביב - קרית שאול  אזור: 2 חלקה: 19 שורה: 3 קבר: 16</p>
+                    <a href="/images/map/00402190.png" target="_blank" rel="noopener noreferrer" className="block text-center">
+  <p className="text-gray-700 underline hover:text-blue-600 transition">
+    מקום קבורה: תל אביב - קרית שאול  אזור: 2 חלקה: 19 שורה: 3 קבר: 16
+  </p>
+  <img
+
+    alt="מפת מקום הקבורה"
+    style={{ margin: '0 auto', marginTop: '8px', borderRadius: '12px', boxShadow: '0 2px 8px #0002', maxWidth: '250px', height: 'auto' }}
+  />
+</a>
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-red-700 mb-2">הותיר אחריו</h3>
