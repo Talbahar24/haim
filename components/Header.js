@@ -1,13 +1,24 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(false);
   const audioRef = useRef(null);
-
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 35;
+      audioRef.current.play()
+        .then(() => setPlaying(true))
+        .catch((error) => {
+          console.log('Autoplay blocked or failed:', error);
+        });
+    }
+  }, []);
+  
   // Play from 0:35 if not already started
   const handlePlay = () => {
     if (audioRef.current) {
