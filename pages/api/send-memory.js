@@ -1,39 +1,71 @@
-import TelegramBot from 'node-telegram-bot-api';
+const formidable = require('formidable');
+const fs = require('fs');
+const path = require('path');
 
-// Initialize the bot with your token
-const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: false });
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  try {
-    const { name, email, relationship, memory } = req.body;
+  // Parse form data (for file upload)
+  const form = new formidable.IncomingForm({
+    uploadDir: path.join(process.cwd(), 'public', 'uploads'),
+    keepExtensions: true,
+    multiples: false,
+  });
 
-    // Format the message
-    const message = `
-🕊 *זיכרון חדש מאתר ההנצחה*
-
-👤 *שם:* ${name}
-📧 *אימייל:* ${email}
-🔗 *קשר לחיים:* ${relationship}
-
-📝 *הזיכרון:*
-${memory}
-
----
-זוהי הודעה אוטומטית מאתר ההנצחה של חיים בכר ז"ל
-`;
-
-    // Send message to Telegram
-    await bot.sendMessage(process.env.TELEGRAM_CHAT_ID, message, {
-      parse_mode: 'Markdown',
-    });
-
-    res.status(200).json({ message: 'Message sent successfully' });
-  } catch (error) {
-    console.error('Error sending message:', error);
-    res.status(500).json({ message: 'Error sending message' });
+  // Ensure uploads dir exists
+  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
   }
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error parsing form data' });
+    }
+
+    // Prepare new memory object
+    const newMemory = {
+      name: fields.name || '',
+      email: fields.email || '',
+      relationship: fields.relationship || '',
+      memory: fields.memory || '',
+      date: new Date().toISOString().slice(0, 10),
+    };
+
+    // Handle photo if exists
+    if (files.photo && files.photo.size > 0) {
+      const photoFile = files.photo;
+      const ext = path.extname(photoFile.originalFilename || photoFile.newFilename);
+      const fileName = `memory_${Date.now()}${ext}`;
+      const destPath = path.join(uploadsDir, fileName);
+      fs.renameSync(photoFile.filepath, destPath);
+      newMemory.photo = `/uploads/${fileName}`;
+    }
+
+    // Read existing memories
+    const memoriesPath = path.join(process.cwd(), 'public', 'memories.json');
+    let memories = [];
+    if (fs.existsSync(memoriesPath)) {
+      const data = fs.readFileSync(memoriesPath, 'utf-8');
+      try {
+        memories = JSON.parse(data);
+      } catch (e) {
+        memories = [];
+      }
+    }
+    // Add new memory
+    memories.unshift(newMemory);
+    // Save back to file
+    fs.writeFileSync(memoriesPath, JSON.stringify(memories, null, 2), 'utf-8');
+
+    return res.status(200).json({ message: 'Memory saved successfully' });
+  });
 } 

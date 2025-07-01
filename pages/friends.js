@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import ImageGallery from '../components/ImageGallery';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function Friends() {
   // Array of friend photo names based on actual files
@@ -23,13 +24,13 @@ export default function Friends() {
         <h1 className="text-5xl font-bold mb-12 text-center text-gray-800 tracking-tight">החברים זוכרים</h1>
 
         {/* Friends Photos Section */}
+        {/* Family Photos Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-semibold mb-8 text-center text-gray-700 tracking-tight">תמונות עם חברים</h2>
           <ImageGallery
             images={friendPhotos}
             getImagePath={getImagePath}
             getImageAlt={getImageAlt}
-            className="friends-gallery"
+            className="family-gallery"
             useSwiper={true}
             swiperEffect="coverflow"
             swiperBreakpoints={{
@@ -39,6 +40,41 @@ export default function Friends() {
             }}
           />
         </section>
+
+        {/* Add custom styles */}
+        <style jsx global>{`
+          .family-swiper {
+            padding: 50px 0;
+            width: 100%;
+          }
+          .swiper-slide {
+            width: 300px !important;
+            height: 400px !important;
+            opacity: 0.4;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+          }
+          .swiper-slide-active {
+            opacity: 1;
+            transform: scale(1);
+          }
+          .swiper-button-next,
+          .swiper-button-prev {
+            color: #991b1b !important;
+            background: rgba(255, 255, 255, 0.8);
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          }
+          .swiper-button-next:after,
+          .swiper-button-prev:after {
+            font-size: 18px !important;
+          }
+          .swiper-pagination-bullet-active {
+            background: #991b1b !important;
+          }
+        `}</style>
 
         {/* Scouts Friends */}
         <section className="mb-16">
@@ -56,27 +92,50 @@ export default function Friends() {
           </div>
         </section>
 
-        {/* Military Friends */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-semibold mb-8 text-center text-gray-700 tracking-tight">חברים מהצבא</h2>
-          <div className="space-y-8">
-            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg transform hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-6 text-red-700">זיכרון מחבר בפלס"ר</h3>
-              <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                "חיים הגיע לצוות שלנו אחרי שכבר היינו מגובשים, אבל הוא השתלב בקלות ובמהירות. הוא היה מנהיג טבעי, ידע להוביל את הצוות הן מבחינה מקצועית והן מבחינה חברתית."
-              </p>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                "הוא היה דמות דומיננטית בצוות, לא פחד להביע את דעתו ולהשפיע על אופי הפעולות. ידענו שאפשר לסמוך על חיים ולהיות שקטים. היינו גאים ללכת אחריו."
-              </p>
+        {/* Team Memorial */}
+          <section className="mb-20">
+            <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">דברים לזכרו</h2>
+            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-semibold text-red-700 mb-2">צוות נוב' 99 / דברים בערב יום הזיכרון</h3>
+                <p className="text-gray-600">5.4.02</p>
+              </div>
+              <div className="text-gray-700 leading-relaxed text-lg space-y-6">
+                <p className="italic">
+                  חיים,<br />
+                  עבר כבר יותר מחודש וחצי ואנחנו עדיין מתקשים להאמין ולעכל את חסרונך. עדיין מחפשים אותך בציותי הכוחות, במיטה יושן ערום, עדיין מחפשים את החיוך הקטן, את הצחוק המתגלגל והכי הרבה את הטון התקיף שאומר: "חבר'ה, יש עבודה לעשות".
+                </p>
+                <p>
+                  כל הזמן אנו שומעים את צירוף המילים "נפל בעת מילוי תפקידו" ואני שואל את עצמי מה תפקידו של אדם בחיים?<br />
+                  תפקידו של אדם בחיים הוא לעשות חיים, לאהוב, להתחתן ולגדל דור חדש של אנשים שימלאו את תפקידו של האדם בחיים.
+                </p>
+                <p>
+                  תפקידו של אדם אינו להתנדב לכל משימה, אינו לחנם בני נוער, אינו לאהוב את כולם ללא גבולות, תפקידו של אדם אינו ללכת לקרבי, אינו לפקד על חיילים, אינו להצליח בכל דבר שהוא עושה, אינו להלחם ואינו ללכת בראש.<br />
+                  תפקידו של אדם בחיים אינו למות בגיל 20.
+                </p>
+                <p>
+                  חיים לא נפל בעת מילוי תפקידו, חיים נפל בעת מילוי הרבה יותר מתפקידו.<br />
+                  חיים נפל בעת שהיווה דוגמא ומופת לכולנו, בעת שעשה את מה שאהב ואת מה שהאמין כי נכון, חיים נפל בעת שאהב את כולם ואהב את החיים, חיים נפל בעת שסמכנו עליו והלכנו אחריו בשדה הקרב.<br />
+                  חיים נפל בגיל 20.
+                </p>
+                <p className="italic">
+                  חיים, כבר הספקנו להיות בלעדייך שוב בבאלטה, ובבית לחם, ובבית שלך, ובזותך, ושוב בבית שלך, ובקסבה של שכם ושום דבר לא כמו שהיה, כי לא נוכל להמשיך הלאה, תמיד חלק מאיתנו ישאר באותה סמטה ובאותו לילה ארור בבאלטה.<br />
+                  ותמיד נזכור שלא נפלת בעת מילוי תפקידך אלא בעת מילוי הרבה יותר מתפקידך.
+                </p>
+                <p className="italic">
+                  חיים, תרשה לי לסיים בתפילה קטנה שאנו ומשפחתך לא נדע עוד צער ובעוד משהו קטן מדברי המשורר:<br />
+                  "את הגשם תן רק בעתו,<br />
+                  ובאביב הבא לנו פרחים,<br />
+                  ותן לנו שנית להיות אתו.<br />
+                  תן לנו שנית להיות אתו."
+                </p>
+                <p className="text-center font-semibold mt-8">
+                  אוהבים תמיד - צוות נובמבר 99<br />
+                  סיירת צנחנים
+                </p>
+              </div>
             </div>
-            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg transform hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-semibold mb-6 text-red-700">זיכרון מחבר מקורס טיס</h3>
-              <p className="text-gray-600 leading-relaxed text-lg">
-                "חיים היה אחד התלמידים הבולטים בקורס. הוא היה חכם, מוכשר, אבל מעל הכל - הוא היה חבר אמיתי. אני זוכר איך כולנו התרגשנו כשהוא התגייס, איך ליווינו אותו לבקו"ם ביום הגיוס."
-              </p>
-            </div>
-          </div>
-        </section>
+          </section>
 
         {/* School Friends */}
         <section className="mb-16">

@@ -109,7 +109,7 @@ export default function Home() {
             <div className="text-center text-white max-w-3xl mx-auto px-4">
               <h1 className="text-6xl font-bold mb-6 tracking-tight">סמ"ר חיים בכר ז"ל</h1>
               <p className="text-2xl mb-3 font-light">בן צ'לה ומוריס</p>
-              <p className="text-xl font-light">נולד בתל אביב, בכ"ו בסיון תשמ"א</p>
+              <p className="text-xl font-light">נולד בבת ים, בכ"ו בסיון תשמ"א</p>
             </div>
           </div>
         </div>
@@ -120,6 +120,25 @@ export default function Home() {
           <section className="mb-20">
             <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">חיים בכר ז"ל</h2>
             
+            <section className="mb-16">
+  <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg flex flex-col items-center">
+    <h2 className="text-3xl font-semibold mb-6 text-red-700">וידאו</h2>
+    {/* כאן תוסיף את המוזיקה */}
+
+    <video
+      autoPlay
+      muted
+      controls
+      width="600"
+      className="rounded-2xl shadow-lg"
+    >
+      <source src="/images/vidoes/WhatsApp Video 2025-06-29 at 23.32.13.mp4" type="video/mp4" />
+      הדפדפן שלך אינו תומך בניגון וידאו.
+    </video>
+
+  </div>
+</section>
+
             {/* Basic Information */}
             <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg mb-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -127,7 +146,7 @@ export default function Home() {
                   <div>
                     <h3 className="text-xl font-semibold text-red-700 mb-2">פרטים אישיים</h3>
                     <p className="text-gray-700">בן צ'לה ומוריס</p>
-                    <p className="text-gray-700">נולד בתל אביב</p>
+                    <p className="text-gray-700">נולד בבת ים</p>
                     <p className="text-gray-700">בכ"ו בסיון תשמ"א, 29/6/1981</p>
                     <p className="text-gray-700">התגורר בתל אביב</p>
                   </div>
@@ -146,11 +165,11 @@ export default function Home() {
                     <p className="text-gray-700">בט"ז באדר תשס"ב, 28/2/2002</p>
                     <p className="text-gray-700">מקום נפילה: מחנה בלטה (שכם)</p>
                     <p className="text-gray-700">באזור יהודה ושומרון</p>
-                    <p className="text-gray-700">מקום קבורה: תל אביב - קרית שאול</p>
+                    <p className="text-gray-700">מקום קבורה: תל אביב - קרית שאול  אזור: 2 חלקה: 19 שורה: 3 קבר: 16</p>
                   </div>
                   <div>
                     <h3 className="text-xl font-semibold text-red-700 mb-2">הותיר אחריו</h3>
-                    <p className="text-gray-700">הורים אח ואחות</p>
+                    <p className="text-gray-700"> הורים אח ואחות שנולדה אחרי נפילתו</p>
                   </div>
                 </div>
               </div>
@@ -158,67 +177,109 @@ export default function Home() {
 
             {/* Life Story */}
             <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-2xl font-semibold text-red-700 mb-4">ילדות ונעורים</h3>
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    חיים נולד ב-29 ביוני 1981, בן בכור לצ'לה ומוריס ואח ליוסי. הוא למד בבית הספר היסודי "ש"י עגנון" בבת ים ובגיל עשר עברה משפחתו לשכונת רמת אביב, שם המשיך את לימודיו בבית הספר היסודי ולאחר מכן בבית הספר התיכון "גימנסיה הרצליה".
-                  </p>
-                </div>
+              <div className="flex flex-col md:flex-row md:items-start gap-8">
+                {/* Image on the left (on desktop) */}
+                <div className="flex-shrink-0 mb-6 md:mb-0 md:ml-8 w-full md:w-64">
+  <Image
+    src="/images/6991698296379640360no.jpg"
+    alt="חיים בכר ז״ל - פורטרט"
+    width={300}
+    height={400}
+    className="rounded-2xl object-cover shadow-md w-full h-auto mb-64"
+    priority
+  />
 
-                <div>
-                  <h3 className="text-2xl font-semibold text-red-700 mb-4">תנועת הצופים</h3>
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    כשהיה בכיתה ח' הצטרף חיים לשבט הצופים, לשכבת "עוצמה". קן הצופים הפך לביתו השני עד כי אמו אמרה לו שהוא נמצא יותר בצופים מאשר בבית והביתה הוא מגיע רק כדי לישון. חיים היה חלק בלתי נפרד מהשכבה בשבט ונמנה על הגרעין שבחבורה, שמנתה עשרה חברים טובים וקרובים. במקביל, השתלב בתפקידי הדרכה ובשנה האחרונה בצופים שימש כרכז צעיר בשבט.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    לחיים היה חיוך רחב וגומת חן שובת לב, והחניכות שלו היו מאוהבות בו ללא תקנה.
-                  </p>
-                </div>
+<Image
+    src="/images/A_HP_050644_30.jpg"
+    alt="חיים בכר ז״ל - פורטרט"
+    width={300}
+    height={400}
+    className="rounded-2xl object-cover shadow-md w-full h-auto mb-64"
+    priority
+  />
 
-                <div>
-                  <h3 className="text-2xl font-semibold text-red-700 mb-4">שירות צבאי</h3>
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    לפני שהתגייס לצבא היה ברור לו שהוא הולך לחיל קרבי כדי לתרום למדינה. לאמו אמר פעמים רבות, כי הוא זו שחינכה אותו לתת.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    חיים עבר בהצלחה את המיונים לקורס טיס. כל חבריו התרגשו כאשר התגייס וכולם ליוו אותו לבקו"ם ביום הגיוס. לאחר שנה וחודשיים בקורס טייס, עבר חיים לשרת ביחידת פלס"ר צנחנים. הוא היה יכול לבחור בכל יחידה שרצה, אבל בחר בקרבי. הצוות שאליו שובץ היה כבר מגובש לאחר חודשים של אימונים משותפים, אך חיים השתלב בו בקלות ובמהירות. חבריו לצוות מספרים שחיים הוביל את הצוות הן מבחינה מקצועית והן מבחינה חברתית.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4 italic">
-                    "ידענו שאפשר לסמוך על חיים ולהיות שקטים והיינו גאים ללכת אחריו"
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    חיים היה דמות דומיננטית וכחלק מתפקידו ביטא את דעותיו לגבי אסטרטגיות צבאיות שונות. לא אחת הצליח להשפיע על הממונים עליו לשנות את אופי הפעולה על מנת להגיע להישגים טובים יותר.
-                  </p>
-                </div>
+  <Image
+    src="/images/HP_050644_38.jpg"
+    alt="חיים בכר ז״ל - אישיותו"
+    width={300}
+    height={400}
+    className="rounded-2xl object-cover shadow-md w-full h-auto"
+    priority
+  />
+</div>
 
-                <div>
-                  <h3 className="text-2xl font-semibold text-red-700 mb-4">אישיותו</h3>
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    חיים מיצה כל רגע אפשרי. בכל יציאה הביתה הוא ידע לשלב בכשרון רב מפגשים עם החברים מימי בית הספר, חברים מקורס טיס, החברה, הצופים, והחבר'ה מהפלס"ר, וגם כמובן עם המשפחה. חיים היה קשור מאוד למשפחתו ודאג להיפגש עם הסבתות, הסבים והדודות.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    חיים היה אופטימי מטבעו. על שפתיו היו שגורים תמיד משפטים כגון "להסתכל תמיד על חצי הכוס המלאה", ו"הכל בראש". הוא לא הכיר את הביטוי "לא יכול".
-                  </p>
-                </div>
 
-                <div>
-                  <h3 className="text-2xl font-semibold text-red-700 mb-4">נפילה והנצחה</h3>
-                  <p className="text-gray-700 leading-relaxed text-lg">
-                    עשרה ימים לפני הפעולה בה נהרג, השתתף חיים בפעילות ברצועה. על פעילות זו הוענק לו צל"ש, שהוריו קיבלו לאחר מותו.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    חיים נהרג ב-28 בפברואר 2002, במהלך פעולה במחנה הפליטים בלאטה בשכם. הוא הוביל את הכוח, כפי שעשה בכל הפעולות בהן השתתף. באחת הסימטאות הופעל מטען, וחיים, שהיה הראשון והמוביל, נהרג. בן עשרים היה במותו.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    משפחתו של חיים דואגת להנציחו בדרכים שונות. בשנה האחרונה הוקם חדר הנצחה בשבט הצופים שחיים היה פעיל בו. החדר מיועד להעברת פעולות שונות ומוקדש לחיים.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4">
-                    חיים אהב מאוד לטייל בארץ. בקיץ 2002 לקראת תאריך יום הולדתו ה-21, הקימה המשפחה כיתת לימוד בטבע, ביער הזורע שברמת מנשה, יער שבו בילה חיים כל שנה את חודשי הקיץ במהלך פעילותו הענפה בתנועת הצופים. חנוכת כיתת הטבע לוותה בקיום צעדה ביער הזורע, פעילות שהיתה אהובה במיוחד על חיים. בנוסף לכל אלו, הוקמה קרן על שמו של חיים בכר, המעניקה מדי שנה שתי מלגות ללוחמים למטרת לימודים אקדמיים.
-                  </p>
-                  <p className="text-gray-700 leading-relaxed text-lg mt-4 italic">
-                    חיים היה נסיך, נסיך בין חבריו ובמשפחתו. לאחר מותו, בני משפחה וחברים קעקעו על גופם את הציור של הנסיך הקטן, ודמותו הולכת איתם לכל מקום.
-                  </p>
+                
+
+
+                {/* Text content */}
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-700 mb-4">ילדות ונעורים</h3>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      חיים נולד ב-29 ביוני 1981, בן בכור לצ'לה ומוריס ואח ליוסי. הוא למד בבית הספר היסודי "ש"י עגנון" בבת ים ובגיל עשר עברה משפחתו לשכונת רמת אביב, שם המשיך את לימודיו בבית הספר היסודי ולאחר מכן בבית הספר התיכון "גימנסיה הרצליה".
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-700 mb-4">תנועת הצופים</h3>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      כשהיה בכיתה ח' הצטרף חיים לשבט הצופים, לשכבת "עוצמה". קן הצופים הפך לביתו השני עד כי אמו אמרה לו שהוא נמצא יותר בצופים מאשר בבית והביתה הוא מגיע רק כדי לישון. חיים היה חלק בלתי נפרד מהשכבה בשבט ונמנה על הגרעין שבחבורה, שמנתה עשרה חברים טובים וקרובים. במקביל, השתלב בתפקידי הדרכה ובשנה האחרונה בצופים שימש כרכז צעיר בשבט.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      לחיים היה חיוך רחב וגומת חן שובת לב, והחניכות שלו היו מאוהבות בו ללא תקנה.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-700 mb-4">שירות צבאי</h3>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      לפני שהתגייס לצבא היה ברור לו שהוא הולך לחיל קרבי כדי לתרום למדינה. לאמו אמר פעמים רבות, כי הוא זו שחינכה אותו לתת.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      חיים עבר בהצלחה את המיונים לקורס טיס. כל חבריו התרגשו כאשר התגייס וכולם ליוו אותו לבקו"ם ביום הגיוס. לאחר שנה וחודשיים בקורס טייס, עבר חיים לשרת ביחידת פלס"ר צנחנים. הוא היה יכול לבחור בכל יחידה שרצה, אבל בחר בקרבי. הצוות שאליו שובץ היה כבר מגובש לאחר חודשים של אימונים משותפים, אך חיים השתלב בו בקלות ובמהירות. חבריו לצוות מספרים שחיים הוביל את הצוות הן מבחינה מקצועית והן מבחינה חברתית.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4 italic">
+                      "ידענו שאפשר לסמוך על חיים ולהיות שקטים והיינו גאים ללכת אחריו"
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      חיים היה דמות דומיננטית וכחלק מתפקידו ביטא את דעותיו לגבי אסטרטגיות צבאיות שונות. לא אחת הצליח להשפיע על הממונים עליו לשנות את אופי הפעולה על מנת להגיע להישגים טובים יותר.
+                    </p>
+                  </div>
+
+                  <div>
+                                    {/* Image on the left (on desktop) */}
+
+                    <div className="flex items-center gap-4 mb-4">
+
+                      <h3 className="text-2xl font-semibold text-red-700">אישיותו</h3>
+                    </div>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      חיים מיצה כל רגע אפשרי. בכל יציאה הביתה הוא ידע לשלב בכשרון רב מפגשים עם החברים מימי בית הספר, חברים מקורס טיס, החברה, הצופים, והחבר'ה מהפלס"ר, וגם כמובן עם המשפחה. חיים היה קשור מאוד למשפחתו ודאג להיפגש עם הסבתות, הסבים והדודות.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      חיים היה אופטימי מטבעו. על שפתיו היו שגורים תמיד משפטים כגון "להסתכל תמיד על חצי הכוס המלאה", ו"הכל בראש". הוא לא הכיר את הביטוי "לא יכול".
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-2xl font-semibold text-red-700 mb-4">נפילה והנצחה</h3>
+                    <p className="text-gray-700 leading-relaxed text-lg">
+                      עשרה ימים לפני הפעולה בה נהרג, השתתף חיים בפעילות ברצועה. על פעילות זו הוענק לו צל"ש, שהוריו קיבלו לאחר מותו.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      חיים נהרג ב-28 בפברואר 2002, במהלך פעולה במחנה הפליטים בלאטה בשכם. הוא הוביל את הכוח, כפי שעשה בכל הפעולות בהן השתתף. באחת הסימטאות הופעל מטען, וחיים, שהיה הראשון והמוביל, נהרג. בן עשרים היה במותו.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      משפחתו של חיים דואגת להנציחו בדרכים שונות. בשנה האחרונה הוקם חדר הנצחה בשבט הצופים שחיים היה פעיל בו. החדר מיועד להעברת פעולות שונות ומוקדש לחיים.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4">
+                      חיים אהב מאוד לטייל בארץ. בקיץ 2002 לקראת תאריך יום הולדתו ה-21, הקימה המשפחה כיתת לימוד בטבע, ביער הזורע שברמת מנשה, יער שבו בילה חיים כל שנה את חודשי הקיץ במהלך פעילותו הענפה בתנועת הצופים. חנוכת כיתת הטבע לוותה בקיום צעדה ביער הזורע, פעילות שהיתה אהובה במיוחד על חיים. בנוסף לכל אלו, הוקמה קרן על שמו של חיים בכר, המעניקה מדי שנה שתי מלגות ללוחמים למטרת לימודים אקדמיים.
+                    </p>
+                    <p className="text-gray-700 leading-relaxed text-lg mt-4 italic">
+                      חיים היה נסיך, נסיך בין חבריו ובמשפחתו. לאחר מותו, בני משפחה וחברים קעקעו על גופם את הציור של הנסיך הקטן, ודמותו הולכת איתם לכל מקום.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -227,6 +288,14 @@ export default function Home() {
           {/* Memorial Quote */}
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-12 mb-16 text-center transform hover:scale-[1.02] transition-transform duration-300">
             <blockquote className="text-3xl text-gray-700 italic font-light leading-relaxed">
+            <Image
+    src="/images/NP_039138_29.jpg"
+    alt="חיים בכר ז״ל - אישיותו"
+    width={200}
+    height={200}
+    className="rounded-2xl object-cover shadow-md w-full h-auto"
+    priority
+  />
               "חיים היה נסיך, נסיך בין חבריו ובמשפחתו"
             </blockquote>
           </div>
@@ -256,50 +325,7 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Team Memorial */}
-          <section className="mb-20">
-            <h2 className="text-4xl font-bold mb-12 text-center text-gray-800 tracking-tight">דברים לזכרו</h2>
-            <div className="bg-white/90 backdrop-blur-sm p-10 rounded-2xl shadow-lg">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-semibold text-red-700 mb-2">צוות נוב' 99 / דברים בערב יום הזיכרון</h3>
-                <p className="text-gray-600">5.4.02</p>
-              </div>
-              <div className="text-gray-700 leading-relaxed text-lg space-y-6">
-                <p className="italic">
-                  חיים,<br />
-                  עבר כבר יותר מחודש וחצי ואנחנו עדיין מתקשים להאמין ולעכל את חסרונך. עדיין מחפשים אותך בציותי הכוחות, במיטה יושן ערום, עדיין מחפשים את החיוך הקטן, את הצחוק המתגלגל והכי הרבה את הטון התקיף שאומר: "חבר'ה, יש עבודה לעשות".
-                </p>
-                <p>
-                  כל הזמן אנו שומעים את צירוף המילים "נפל בעת מילוי תפקידו" ואני שואל את עצמי מה תפקידו של אדם בחיים?<br />
-                  תפקידו של אדם בחיים הוא לעשות חיים, לאהוב, להתחתן ולגדל דור חדש של אנשים שימלאו את תפקידו של האדם בחיים.
-                </p>
-                <p>
-                  תפקידו של אדם אינו להתנדב לכל משימה, אינו לחנם בני נוער, אינו לאהוב את כולם ללא גבולות, תפקידו של אדם אינו ללכת לקרבי, אינו לפקד על חיילים, אינו להצליח בכל דבר שהוא עושה, אינו להלחם ואינו ללכת בראש.<br />
-                  תפקידו של אדם בחיים אינו למות בגיל 20.
-                </p>
-                <p>
-                  חיים לא נפל בעת מילוי תפקידו, חיים נפל בעת מילוי הרבה יותר מתפקידו.<br />
-                  חיים נפל בעת שהיווה דוגמא ומופת לכולנו, בעת שעשה את מה שאהב ואת מה שהאמין כי נכון, חיים נפל בעת שאהב את כולם ואהב את החיים, חיים נפל בעת שסמכנו עליו והלכנו אחריו בשדה הקרב.<br />
-                  חיים נפל בגיל 20.
-                </p>
-                <p className="italic">
-                  חיים, כבר הספקנו להיות בלעדייך שוב בבאלטה, ובבית לחם, ובבית שלך, ובזותך, ושוב בבית שלך, ובקסבה של שכם ושום דבר לא כמו שהיה, כי לא נוכל להמשיך הלאה, תמיד חלק מאיתנו ישאר באותה סמטה ובאותו לילה ארור בבאלטה.<br />
-                  ותמיד נזכור שלא נפלת בעת מילוי תפקידך אלא בעת מילוי הרבה יותר מתפקידך.
-                </p>
-                <p className="italic">
-                  חיים, תרשה לי לסיים בתפילה קטנה שאנו ומשפחתך לא נדע עוד צער ובעוד משהו קטן מדברי המשורר:<br />
-                  "את הגשם תן רק בעתו,<br />
-                  ובאביב הבא לנו פרחים,<br />
-                  ותן לנו שנית להיות אתו.<br />
-                  תן לנו שנית להיות אתו."
-                </p>
-                <p className="text-center font-semibold mt-8">
-                  אוהבים תמיד - צוות נובמבר 99<br />
-                  סיירת צנחנים
-                </p>
-              </div>
-            </div>
-          </section>
+         
 
           {/* Youtube Gallery */}
           <YoutubeGallery />
