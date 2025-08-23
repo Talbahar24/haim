@@ -91,7 +91,8 @@ export default function Home() {
     <>
       <Head>
         <title>חיים בכר ז"ל - לזכרו</title>
-        <meta name="description" content='אתר לזכרו של סמ"ר חיים בכר ז"ל' />
+        <meta name="description" content='אתר לזכרו של סמ"ר חיים בכר ז"ל'/>
+        <link rel="icon" href="/images/LOGO.jpeg"/>
       </Head>
 
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 text-right">
@@ -471,6 +472,7 @@ export default function Home() {
                   <Link href="/family" className="block hover:text-red-200 transition-colors duration-300">המשפחה זוכרים</Link>
                   <Link href="/friends" className="block hover:text-red-200 transition-colors duration-300">החברים זוכרים</Link>
                   <Link href="/share" className="block hover:text-red-200 transition-colors duration-300">שיתוף שלכם</Link>
+                  <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="block hover:text-blue-300 transition-colors duration-300">מפת האתר (sitemap.xml)</a>
                 </div>
               </div>
             </div>
