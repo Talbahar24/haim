@@ -13,13 +13,26 @@ export default function Family() {
   const getImageAlt = (num) => `תמונה משפחתית ${num}`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 text-right">
-      <main className="max-w-7xl mx-auto py-16 px-4">
-        <h1 className="text-5xl font-bold mb-12 text-center text-gray-800 tracking-tight">המשפחה זוכרת</h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 text-right">
+      <main className="max-w-7xl mx-auto py-16 px-4 pt-24">
+        <div className="text-center mb-16">
+          <div className="inline-block mb-4">
+            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-rose-400 to-transparent"></div>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-rose-700 to-gray-800 tracking-tight">
+            המשפחה זוכרת
+          </h1>
+          <div className="h-1 w-32 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
+        </div>
 
         {/* Family Photos Section */}
         <section className="mb-16">
-          <h2 className="text-3xl font-semibold mb-8 text-center text-gray-700 tracking-tight">תמונות משפחתיות</h2>
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-4">
+              <div className="h-1 w-16 bg-gradient-to-r from-rose-500 to-rose-300 rounded-full ml-4"></div>
+              <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-600 to-rose-800">תמונות משפחתיות</h2>
+            </div>
+          </div>
           <ImageGallery
             images={familyPhotos}
             getImagePath={getImagePath}

@@ -20,24 +20,40 @@ const videos = [
 
 export default function YoutubeGallery() {
   return (
-    <section className="my-12 px-4">
-      <h2 className="text-3xl font-bold mb-8 text-center">סרטונים לזכר חיים</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-8">
+    <section className="my-20 px-4">
+      <div className="text-center mb-16">
+        <div className="inline-block mb-4">
+          <div className="h-1 w-32 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
+        </div>
+        <h2 className="text-5xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-gray-800 via-red-700 to-gray-800 tracking-tight">
+          סרטונים לזכר חיים
+        </h2>
+        <div className="h-1 w-32 bg-gradient-to-r from-transparent via-red-500 to-transparent"></div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10 max-w-6xl mx-auto">
         {videos.map((video, idx) => (
-          <div key={idx} className="bg-white rounded-lg shadow-md p-2 md:p-4 flex flex-col items-center">
-            <div className="w-full aspect-video mb-2 md:mb-4">
-              <iframe
-                width="100%"
-                height="100%"
-                src={video.url}
-                title={video.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="rounded-lg w-full h-full"
-              ></iframe>
+          <div key={idx} className="group">
+            <div className="bg-gradient-to-br from-white/95 via-red-50/20 to-red-100/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/50 p-6 transform hover:scale-[1.02] hover:shadow-3xl transition-all duration-500 overflow-hidden relative">
+              <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-red-700 rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
+              <div className="relative">
+                <div className="w-full aspect-video mb-6 rounded-2xl overflow-hidden shadow-xl">
+                  <iframe
+                    width="100%"
+                    height="100%"
+                    src={video.url}
+                    title={video.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="rounded-2xl w-full h-full transform group-hover:scale-105 transition-transform duration-500"
+                  ></iframe>
+                </div>
+                <div className="text-center">
+                  <div className="h-1 w-16 bg-gradient-to-r from-red-500 to-red-700 rounded-full mx-auto mb-4"></div>
+                  <p className="text-gray-800 font-bold text-lg md:text-xl px-4 leading-relaxed">{video.title}</p>
+                </div>
+              </div>
             </div>
-            <p className="text-center text-gray-700 font-semibold text-sm md:text-base px-2">{video.title}</p>
           </div>
         ))}
       </div>
