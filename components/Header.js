@@ -35,6 +35,7 @@ export default function Header() {
     { href: '/about', label: 'על חיים' },
     { href: '/family', label: 'המשפחה זוכרים' },
     { href: '/friends', label: 'החברים זוכרים' },
+    { href: '/letters', label: 'מכתבים וכתבות' },
     { href: '/share', label: 'שיתוף שלכם' },
   ];
 

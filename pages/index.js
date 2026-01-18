@@ -98,9 +98,25 @@ export default function Home() {
     <>
       <Head>
         <title>חיים בכר ז"ל - לזכרו</title>
-        <meta name="description" content='אתר לזכרו של סמ"ר חיים בכר ז"ל'/>
+        <meta name="description" content='אתר לזכרו של סמ"ר חיים בכר ז"ל - נולד ב-29/6/1981, נפל ב-28/2/2002'/>
+        <meta name="keywords" content="חיים בכר, סמיר חיים בכר, צנחנים, פלסר, הנצחה, זיכרון"/>
         <link rel="icon" href="/images/LOGO.jpeg"/>
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://haimbachar.com/" />
+        <meta property="og:title" content='חיים בכר ז"ל - לזכרו' />
+        <meta property="og:description" content='אתר לזכרו של סמ"ר חיים בכר ז"ל - נולד ב-29/6/1981, נפל ב-28/2/2002' />
+        <meta property="og:image" content="https://haimbachar.com/images/Haim%20Bachar.jpg" />
+        <meta property="og:locale" content="he_IL" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://haimbachar.com/" />
+        <meta name="twitter:title" content='חיים בכר ז"ל - לזכרו' />
+        <meta name="twitter:description" content='אתר לזכרו של סמ"ר חיים בכר ז"ל - נולד ב-29/6/1981, נפל ב-28/2/2002' />
+        <meta name="twitter:image" content="https://haimbachar.com/images/Haim%20Bachar.jpg" />
       </Head>
 
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 text-right">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head';
 import ImageGallery from '../components/ImageGallery';
 
 export default function Letters() {
@@ -13,7 +14,13 @@ export default function Letters() {
   const getImageAlt = (num) => `מכתב או כתבה ${num}`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 text-right">
+    <>
+      <Head>
+        <title>מכתבים וכתבות - חיים בכר ז"ל</title>
+        <meta name="description" content="מכתבים וכתבות על חיים בכר ז״ל" />
+        <link rel="icon" href="/images/LOGO.jpeg" />
+      </Head>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 text-right">
       <main className="max-w-7xl mx-auto py-16 px-4 pt-24">
         <div className="text-center mb-16">
           <div className="inline-block mb-4">
@@ -149,5 +156,6 @@ export default function Letters() {
         </footer>
       </main>
     </div>
+    </>
   );
 } 

@@ -61,8 +61,9 @@ export default function Share() {
   return (
     <>
       <Head>
-        <title>שתף זיכרון - חיים בכר</title>
-        <meta name="description" content="שתף זיכרון אישי על חיים בכר" />
+        <title>שתף זיכרון - חיים בכר ז"ל</title>
+        <meta name="description" content="שתף זיכרון אישי על חיים בכר ז״ל" />
+        <link rel="icon" href="/images/LOGO.jpeg" />
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 py-8 px-4 sm:px-6 lg:px-8 pt-24">

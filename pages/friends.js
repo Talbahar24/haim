@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head';
 import ImageGallery from '../components/ImageGallery';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -19,7 +20,13 @@ export default function Friends() {
   const getImageAlt = (name) => `חיים עם חברים - ${name}`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 text-right">
+    <>
+      <Head>
+        <title>החברים זוכרים - חיים בכר ז"ל</title>
+        <meta name="description" content="זיכרונות ותמונות מחבריו של חיים בכר ז״ל" />
+        <link rel="icon" href="/images/LOGO.jpeg" />
+      </Head>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-red-50/40 to-red-100/30 text-right">
       <main className="max-w-7xl mx-auto py-16 px-4 pt-24">
         <div className="text-center mb-16">
           <div className="inline-block mb-4">
@@ -204,5 +211,6 @@ export default function Friends() {
         </div>
       </footer>
     </div>
+    </>
   );
 } 
