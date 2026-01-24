@@ -3,7 +3,7 @@ import Image from 'next/image';
 import YoutubeGallery from '../components/YoutubeGallery';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -41,11 +41,28 @@ export default function Home() {
     return `/images/${name}.jpg`;
   };
 
+  // Function to navigate between images - wrapped in useCallback
+  const navigateImage = useCallback((direction) => {
+    const newIndex = direction === 'next' 
+      ? (currentImageIndex + 1) % galleryImages.length 
+      : (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+    
+    setCurrentImageIndex(newIndex);
+    setSelectedImage(galleryImages[newIndex]);
+  }, [currentImageIndex, galleryImages]);
+
+  // Function to open image and set current index - wrapped in useCallback
+  const openImage = useCallback((imageName) => {
+    const index = galleryImages.indexOf(imageName);
+    setCurrentImageIndex(index);
+    setSelectedImage(imageName);
+  }, [galleryImages]);
+
   // Function to handle keyboard navigation
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!selectedImage) return;
+    if (!selectedImage) return;
 
+    const handleKeyDown = (e) => {
       if (e.key === 'ArrowLeft') {
         navigateImage('prev');
       } else if (e.key === 'ArrowRight') {
@@ -57,29 +74,12 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedImage, currentImageIndex]);
+  }, [selectedImage, navigateImage]);
 
   // Fade in animation on mount
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
-  // Function to navigate between images
-  const navigateImage = (direction) => {
-    const newIndex = direction === 'next' 
-      ? (currentImageIndex + 1) % galleryImages.length 
-      : (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
-    
-    setCurrentImageIndex(newIndex);
-    setSelectedImage(galleryImages[newIndex]);
-  };
-
-  // Function to open image and set current index
-  const openImage = (imageName) => {
-    const index = galleryImages.indexOf(imageName);
-    setCurrentImageIndex(index);
-    setSelectedImage(imageName);
-  };
 
   const images = [
     { src: '/images/haim1.jpg', alt: 'חיים בכר - תמונה 1' },
@@ -197,6 +197,20 @@ export default function Home() {
                     controls
                     className="w-full h-auto rounded-3xl"
                     style={{ maxHeight: '70vh' }}
+                    onVolumeChange={(e) => {
+                      // Pause audio only when video is unmuted (volume > 0 or muted = false)
+                      const video = e.target;
+                      if (!video.muted && video.volume > 0) {
+                        window.dispatchEvent(new CustomEvent('video-unmute'));
+                      }
+                    }}
+                    onPlay={(e) => {
+                      // Check if video is unmuted when playing
+                      const video = e.target;
+                      if (!video.muted && video.volume > 0) {
+                        window.dispatchEvent(new CustomEvent('video-unmute'));
+                      }
+                    }}
                   >
                     <source src="/images/vidoes/WhatsApp Video 2025-06-29 at 23.32.13.mp4" type="video/mp4" />
                     הדפדפן שלך אינו תומך בניגון וידאו.

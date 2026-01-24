@@ -19,6 +19,7 @@ const videos = [
 ];
 
 export default function YoutubeGallery() {
+
   return (
     <section className="my-20 px-4">
       <div className="text-center mb-16">
