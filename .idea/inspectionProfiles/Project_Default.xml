@@ -1,0 +1,29 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="9">
+            <item index="0" class="java.lang.String" itemvalue="analyzer" />
+            <item index="1" class="java.lang.String" itemvalue="matplotlib" />
+            <item index="2" class="java.lang.String" itemvalue="Flask_Cors" />
+            <item index="3" class="java.lang.String" itemvalue="Requests" />
+            <item index="4" class="java.lang.String" itemvalue="pandas_ta" />
+            <item index="5" class="java.lang.String" itemvalue="python_binance" />
+            <item index="6" class="java.lang.String" itemvalue="alpaca_trade_api" />
+            <item index="7" class="java.lang.String" itemvalue="requests" />
+            <item index="8" class="java.lang.String" itemvalue="stockairutils" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="bool.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
