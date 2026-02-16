@@ -194,9 +194,15 @@ export default function Home() {
                   <video
                     autoPlay
                     muted
+                    playsInline
                     controls
+                    preload="metadata"
                     className="w-full h-auto rounded-3xl"
                     style={{ maxHeight: '70vh' }}
+                    onError={(e) => {
+                      // Prevent unhandled errors on mobile (e.g. codec/autoplay issues)
+                      console.warn('Video load/play error:', e.target?.error?.message || 'unknown');
+                    }}
                     onVolumeChange={(e) => {
                       // Pause audio only when video is unmuted (volume > 0 or muted = false)
                       const video = e.target;

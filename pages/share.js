@@ -165,14 +165,24 @@ export default function Share() {
               </div>
 
               {submitStatus === 'success' && (
-                <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 rounded-xl border-2 border-green-200">
-                  הזיכרון נשלח בהצלחה! תודה על השיתוף.
+                <div className="p-4 flex items-center gap-3 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 border border-green-200/80 shadow-sm animate-fadeIn">
+                  <span className="flex-shrink-0 w-10 h-10 rounded-full bg-green-200/80 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  <span className="font-medium">הזיכרון נשלח בהצלחה! תודה על השיתוף.</span>
                 </div>
               )}
 
               {submitStatus === 'error' && (
-                <div className="p-4 bg-gradient-to-r from-red-50 to-rose-50 text-red-700 rounded-xl border-2 border-red-200">
-                  אירעה שגיאה בשליחת הזיכרון. אנא נסה שוב מאוחר יותר.
+                <div className="p-4 flex items-center gap-3 rounded-2xl bg-gradient-to-r from-red-50 to-rose-50 text-red-800 border border-red-200/80 shadow-sm animate-fadeIn">
+                  <span className="flex-shrink-0 w-10 h-10 rounded-full bg-red-200/80 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-red-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </span>
+                  <span className="font-medium">אירעה שגיאה בשליחת הזיכרון. אנא נסה שוב מאוחר יותר.</span>
                 </div>
               )}
 

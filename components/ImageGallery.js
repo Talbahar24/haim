@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Keyboard } from 'swiper/modules';
@@ -25,38 +25,36 @@ export default function ImageGallery({
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleImageClick = (image) => {
+  const handleImageClick = useCallback((image) => {
     const index = images.indexOf(image);
     setCurrentImageIndex(index);
     setSelectedImage(image);
-  };
+  }, [images]);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedImage(null);
-  };
-
-  const handleKeyDown = (e) => {
-    if (!selectedImage) return;
-    
-    if (e.key === 'ArrowLeft') {
-      const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
-      setCurrentImageIndex(prevIndex);
-      setSelectedImage(images[prevIndex]);
-    } else if (e.key === 'ArrowRight') {
-      const nextIndex = (currentImageIndex + 1) % images.length;
-      setCurrentImageIndex(nextIndex);
-      setSelectedImage(images[nextIndex]);
-    } else if (e.key === 'Escape') {
-      closeModal();
-    }
-  };
+  }, []);
 
   useEffect(() => {
-    if (selectedImage) {
-      window.addEventListener('keydown', handleKeyDown);
-      return () => window.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [selectedImage, currentImageIndex]);
+    if (!selectedImage) return;
+    
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') {
+        const prevIndex = (currentImageIndex - 1 + images.length) % images.length;
+        setCurrentImageIndex(prevIndex);
+        setSelectedImage(images[prevIndex]);
+      } else if (e.key === 'ArrowRight') {
+        const nextIndex = (currentImageIndex + 1) % images.length;
+        setCurrentImageIndex(nextIndex);
+        setSelectedImage(images[nextIndex]);
+      } else if (e.key === 'Escape') {
+        closeModal();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedImage, currentImageIndex, images, closeModal]);
 
   // Swiper Gallery Component
   const SwiperGallery = () => (

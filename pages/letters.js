@@ -57,16 +57,19 @@ export default function Letters() {
         </section>
 
         {/* PDF Documents Section */}
-        <section className="mb-16 bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-semibold mb-6 text-center text-gray-700 tracking-tight">מסמכים נוספים</h2>
+        <section className="mb-16 rounded-3xl bg-gradient-to-br from-white/95 via-red-50/20 to-red-100/20 backdrop-blur-xl shadow-2xl border border-white/50 p-8 md:p-10">
+          <div className="flex items-center justify-center mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-red-600 to-red-400 rounded-full ml-4" />
+            <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-700 to-red-900 tracking-tight">מסמכים נוספים</h2>
+          </div>
           <div className="text-center">
             <a
               href="/documents/חיים_כתבות.pdf.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-red-800 text-white rounded-lg hover:bg-red-900 transition-colors duration-300 shadow-md"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold bg-gradient-to-r from-red-600 to-red-800 text-white hover:from-red-700 hover:to-red-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
-              <svg className="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
               צפה בכתבות נוספות על חיים

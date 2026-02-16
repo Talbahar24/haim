@@ -13,6 +13,14 @@ export default function Header() {
 
   // Check if we're on the home page
   const isHomePage = router.pathname === '/';
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     // If not on home page, always show background
@@ -26,7 +34,9 @@ export default function Header() {
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50);
+          if (isMountedRef.current) {
+            setIsScrolled(window.scrollY > 50);
+          }
           ticking = false;
         });
         ticking = true;
@@ -43,36 +53,27 @@ export default function Header() {
   // Track if user manually paused
   const userPausedRef = useRef(false);
 
-  // Function to play audio - wrapped in useCallback to prevent recreating
+  // Function to play audio – all play() calls are wrapped so rejections never reach global handler (important on mobile)
   const playAudio = useCallback(async () => {
-    // Don't auto-play if user manually paused
-    if (userPausedRef.current) {
-      return;
-    }
+    if (userPausedRef.current) return;
 
-    // Try to play desktop audio first (if it exists and is paused)
-    if (audioRef.current && audioRef.current.paused) {
-      try {
-        audioRef.current.volume = 0.5; // Set volume to 50%
-        await audioRef.current.play();
-        setIsPlaying(true);
-        userPausedRef.current = false; // Reset flag when playing
-        return;
-      } catch (error) {
-        // Continue to try mobile
+    const tryPlay = (el) => {
+      if (!el || !el.paused) return null;
+      el.volume = 0.5;
+      return el.play();
+    };
+
+    try {
+      const p = tryPlay(audioRef.current) ?? tryPlay(mobileAudioRef.current);
+      if (p) {
+        await p;
+        if (isMountedRef.current) {
+          setIsPlaying(true);
+          userPausedRef.current = false;
+        }
       }
-    }
-    
-    // If desktop audio fails or doesn't exist, try mobile
-    if (mobileAudioRef.current && mobileAudioRef.current.paused) {
-      try {
-        mobileAudioRef.current.volume = 0.5;
-        await mobileAudioRef.current.play();
-        setIsPlaying(true);
-        userPausedRef.current = false; // Reset flag when playing
-      } catch (err) {
-        // Auto-play was prevented by browser - user needs to interact first
-      }
+    } catch (_) {
+      // Auto-play blocked (e.g. mobile) – stay silent; user can tap play
     }
   }, []);
 
@@ -108,20 +109,18 @@ export default function Header() {
     }
   }, []);
 
-  // Auto-play music on page load and route change
+  // Auto-play music on page load and route change (never let rejection escape – avoids "page drop" on mobile)
   useEffect(() => {
-    // Only auto-play if user hasn't manually paused
-    if (userPausedRef.current) {
-      return;
-    }
+    if (userPausedRef.current) return;
 
-    // Small delay to ensure audio element is ready
     const timer = setTimeout(() => {
-      playAudio();
+      playAudio().catch(() => {
+        // Auto-play blocked (e.g. mobile policy) – silent; user can tap play manually
+      });
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [router.pathname, playAudio]); // Trigger on route change
+  }, [router.pathname, playAudio]);
 
   const navLinks = [
     { href: '/', label: 'בית' },
@@ -260,6 +259,9 @@ export default function Header() {
                     ref={audioRef}
                     loop
                     className="hidden"
+                    onError={() => {
+                      // Catch load/play errors so they don't crash the page (e.g. mobile/network)
+                    }}
                     onPlay={() => {
                       setIsPlaying(true);
                       userPausedRef.current = false;
@@ -406,6 +408,9 @@ export default function Header() {
                   ref={mobileAudioRef}
                   loop
                   className="hidden"
+                  onError={() => {
+                    // Catch load/play errors so they don't crash the page (e.g. mobile/network)
+                  }}
                   onPlay={() => {
                     setIsPlaying(true);
                     userPausedRef.current = false;
