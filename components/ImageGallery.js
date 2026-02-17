@@ -93,7 +93,9 @@ export default function ImageGallery({
                 src={getImagePath(image)}
                 alt={getImageAlt(image)}
                 fill
+                sizes="(max-width: 640px) 300px, (max-width: 1024px) 320px, 300px"
                 className={`${imageClassName} transition-transform duration-300 hover:scale-110`}
+                loading="lazy"
               />
             </div>
           </SwiperSlide>

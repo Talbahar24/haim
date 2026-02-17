@@ -311,6 +311,8 @@ export default function Home() {
                         <img
                           src="/images/map/00402190.png"
                           alt="מפת מקום הקבורה"
+                          loading="lazy"
+                          decoding="async"
                           className="rounded-xl shadow-md max-w-[250px] h-auto border-2 border-white/50 transform group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
@@ -342,8 +344,8 @@ export default function Home() {
                       alt="חיים בכר ז״ל - פורטרט"
                       width={320}
                       height={420}
+                      sizes="(max-width: 768px) 100vw, 320px"
                       className="relative rounded-3xl object-cover shadow-2xl w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
-                      priority
                     />
                   </div>
 
@@ -354,8 +356,8 @@ export default function Home() {
                       alt="חיים בכר ז״ל - פורטרט"
                       width={320}
                       height={420}
+                      sizes="(max-width: 768px) 100vw, 320px"
                       className="relative rounded-3xl object-cover shadow-2xl w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
-                      priority
                     />
                   </div>
 
@@ -366,8 +368,8 @@ export default function Home() {
                       alt="חיים בכר ז״ל - אישיותו"
                       width={320}
                       height={420}
+                      sizes="(max-width: 768px) 100vw, 320px"
                       className="relative rounded-3xl object-cover shadow-2xl w-full h-auto transform group-hover:scale-105 transition-transform duration-500"
-                      priority
                     />
                   </div>
                 </div>
@@ -590,8 +592,10 @@ export default function Home() {
                             alt={`תמונה של חיים בכר ז"ל`}
                             width={320}
                             height={450}
+                            sizes="(max-width: 640px) 320px, (max-width: 1024px) 50vw, 320px"
                             className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500"
-                            priority={index < 3}
+                            priority={index === 0}
+                            loading={index === 0 ? undefined : 'lazy'}
                             onError={(e) => {
                               console.error(`Error loading image ${imageName}`);
                               e.target.src = '/images/placeholder.jpg';
@@ -710,7 +714,9 @@ export default function Home() {
                     src="/images/HP_050644_22.jpg"
                     alt="חיים בכר ז״ל"
                     fill
+                    sizes="(max-width: 768px) 50vw, 200px"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
@@ -719,7 +725,9 @@ export default function Home() {
                     src="/images/Scan_Pic0007.jpg"
                     alt="חיים בכר ז״ל"
                     fill
+                    sizes="(max-width: 768px) 50vw, 200px"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>

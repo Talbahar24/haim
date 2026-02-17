@@ -57,7 +57,7 @@ export default function Memories({ memories = [] }) {
                   </div>
                   <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{memoryText}</p>
                   {memory.photo && (
-                    <img src={memory.photo} alt="תמונה" className="max-w-xs rounded-2xl mt-4 shadow-md border border-white/50" />
+                    <img src={memory.photo} alt="תמונה" loading="lazy" decoding="async" className="max-w-xs rounded-2xl mt-4 shadow-md border border-white/50" />
                   )}
                 </article>
               );
