@@ -10,6 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 import Head from 'next/head';
 import ImageGallery from '../components/ImageGallery';
+import useIsMobile from '../hooks/useIsMobile';
 
 export default function Home() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -17,6 +18,7 @@ export default function Home() {
   const [showFullBio, setShowFullBio] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const heroRef = useRef(null);
+  const isMobile = useIsMobile();
 
   // Array of image names based on actual files
   const galleryImages = [
@@ -540,51 +542,50 @@ export default function Home() {
             </div>
             <div className="relative px-4 md:px-12">
               <Swiper
+                key={isMobile ? 'mobile' : 'desktop'}
                 modules={[Navigation, Pagination, EffectCoverflow, Autoplay]}
-                effect="coverflow"
-                grabCursor={true}
+                effect={isMobile ? 'slide' : 'coverflow'}
+                grabCursor={!isMobile}
                 centeredSlides={true}
-                slidesPerView="auto"
-                spaceBetween={40}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                }}
-                coverflowEffect={{
+                slidesPerView={isMobile ? 1 : 'auto'}
+                spaceBetween={isMobile ? 16 : 40}
+                autoplay={isMobile ? false : { delay: 3000, disableOnInteraction: false }}
+                coverflowEffect={isMobile ? undefined : {
                   rotate: 15,
                   stretch: 0,
                   depth: 200,
                   modifier: 2,
                   slideShadows: true,
                 }}
-                pagination={{
-                  clickable: true,
-                }}
+                pagination={{ clickable: true }}
                 navigation={true}
-                className="home-swiper"
+                className={`home-swiper ${isMobile ? 'home-swiper-mobile' : ''}`}
               >
                 {galleryImages.map((imageName, index) => (
-                  <SwiperSlide key={imageName} className="w-[320px] h-[450px]">
-                    <div 
+                  <SwiperSlide key={imageName} className={isMobile ? '!w-[85vw] max-w-[280px] !h-[380px]' : 'w-[320px] h-[450px]'}>
+                    <div
                       className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl bg-gray-100 cursor-pointer group"
                       onClick={() => openImage(imageName)}
                     >
-                      <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-700 rounded-3xl opacity-0 group-hover:opacity-75 blur-xl transition-opacity duration-500"></div>
+                      {!isMobile && (
+                        <div className="absolute -inset-2 bg-gradient-to-r from-red-500 to-red-700 rounded-3xl opacity-0 group-hover:opacity-75 blur-xl transition-opacity duration-500" />
+                      )}
                       <div className="relative w-full h-full">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <Image
                             src={getImagePath(imageName)}
                             alt={`תמונה של חיים בכר ז"ל`}
-                            width={320}
-                            height={450}
-                            sizes="(max-width: 640px) 320px, (max-width: 1024px) 50vw, 320px"
-                            className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500"
+                            width={isMobile ? 280 : 320}
+                            height={isMobile ? 380 : 450}
+                            sizes={isMobile ? '280px' : '(max-width: 640px) 320px, (max-width: 1024px) 50vw, 320px'}
+                            className="object-cover w-full h-full transition-transform duration-300"
                             priority={index === 0}
-                            loading={index === 0 ? undefined : 'lazy'}
+                            loading={index <= 1 ? undefined : 'lazy'}
                             onError={(e) => {
-                              console.error(`Error loading image ${imageName}`);
-                              e.target.src = '/images/placeholder.jpg';
-                              e.target.onerror = null;
+                              if (e?.target) {
+                                e.target.src = '/images/placeholder.jpg';
+                                e.target.onerror = null;
+                              }
                             }}
                           />
                         </div>
@@ -606,14 +607,19 @@ export default function Home() {
                 padding: 60px 0;
                 width: 100%;
               }
-              .swiper-slide {
+              .home-swiper-mobile .swiper-slide {
+                opacity: 1;
+                transform: none;
+                box-sizing: border-box;
+              }
+              .home-swiper:not(.home-swiper-mobile) .swiper-slide {
                 width: 320px !important;
                 height: 450px !important;
                 opacity: 0.5;
                 transform: scale(0.85);
                 transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
               }
-              .swiper-slide-active {
+              .home-swiper:not(.home-swiper-mobile) .swiper-slide-active {
                 opacity: 1;
                 transform: scale(1);
               }

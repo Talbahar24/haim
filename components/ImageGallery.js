@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Keyboard } from 'swiper/modules';
+import useIsMobile from '../hooks/useIsMobile';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -24,6 +25,7 @@ export default function ImageGallery({
 }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const isMobile = useIsMobile();
 
   const handleImageClick = useCallback((image) => {
     const index = images.indexOf(image);
@@ -56,35 +58,35 @@ export default function ImageGallery({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedImage, currentImageIndex, images, closeModal]);
 
-  // Swiper Gallery Component
+  const effect = isMobile ? 'slide' : swiperEffect;
+  const slideClass = isMobile ? '!w-[85vw] max-w-[280px] !h-[340px]' : 'w-[300px] h-[400px]';
+  const imageSizes = isMobile ? '280px' : '(max-width: 640px) 300px, (max-width: 1024px) 320px, 300px';
+
   const SwiperGallery = () => (
     <div className={`w-full ${className}`}>
       <Swiper
-        effect={swiperEffect}
-        grabCursor={true}
+        key={isMobile ? 'mobile' : 'desktop'}
+        effect={effect}
+        grabCursor={!isMobile}
         centeredSlides={true}
-        slidesPerView={'auto'}
-        coverflowEffect={{
+        slidesPerView={isMobile ? 1 : 'auto'}
+        spaceBetween={isMobile ? 12 : 20}
+        coverflowEffect={isMobile ? undefined : {
           rotate: 50,
           stretch: 0,
           depth: 100,
           modifier: 1,
           slideShadows: true,
         }}
-        pagination={{
-          clickable: true,
-        }}
+        pagination={{ clickable: true }}
         navigation={true}
-        keyboard={{
-          enabled: true,
-          onlyInViewport: true,
-        }}
+        keyboard={{ enabled: true, onlyInViewport: true }}
         modules={[EffectCoverflow, Pagination, Navigation, Keyboard]}
-        breakpoints={swiperBreakpoints}
+        breakpoints={isMobile ? { 0: { slidesPerView: 1, spaceBetween: 12 } } : swiperBreakpoints}
         className="w-full"
       >
         {images.map((image, index) => (
-          <SwiperSlide key={index} className="w-[300px] h-[400px]">
+          <SwiperSlide key={index} className={slideClass}>
             <div
               className="relative w-full h-full cursor-pointer overflow-hidden rounded-lg shadow-lg"
               onClick={() => handleImageClick(image)}
@@ -93,8 +95,8 @@ export default function ImageGallery({
                 src={getImagePath(image)}
                 alt={getImageAlt(image)}
                 fill
-                sizes="(max-width: 640px) 300px, (max-width: 1024px) 320px, 300px"
-                className={`${imageClassName} transition-transform duration-300 hover:scale-110`}
+                sizes={imageSizes}
+                className={`${imageClassName} transition-transform duration-300`}
                 loading="lazy"
               />
             </div>
