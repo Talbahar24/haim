@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
     const handleUnhandledRejection = (event) => {
       console.error('Unhandled promise rejection:', event.reason);
       event.preventDefault();
-      showToast('חלק מהפעולות לא בוצעו (למשל מוזיקה). הדף ממשיך לעבוד.');
+      showToast('חלק מהפעולות לא בוצעו. הדף ממשיך לעבוד.');
     };
 
     const handleError = (event) => {

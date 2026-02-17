@@ -200,22 +200,7 @@ export default function Home() {
                     className="w-full h-auto rounded-3xl"
                     style={{ maxHeight: '70vh' }}
                     onError={(e) => {
-                      // Prevent unhandled errors on mobile (e.g. codec/autoplay issues)
                       console.warn('Video load/play error:', e.target?.error?.message || 'unknown');
-                    }}
-                    onVolumeChange={(e) => {
-                      // Pause audio only when video is unmuted (volume > 0 or muted = false)
-                      const video = e.target;
-                      if (!video.muted && video.volume > 0) {
-                        window.dispatchEvent(new CustomEvent('video-unmute'));
-                      }
-                    }}
-                    onPlay={(e) => {
-                      // Check if video is unmuted when playing
-                      const video = e.target;
-                      if (!video.muted && video.volume > 0) {
-                        window.dispatchEvent(new CustomEvent('video-unmute'));
-                      }
                     }}
                   >
                     <source src="/images/vidoes/WhatsApp Video 2025-06-29 at 23.32.13.mp4" type="video/mp4" />
